@@ -14,8 +14,13 @@ server.use(helmet())
 server.use(morgan('dev'))
 server.use(cors())
 server.use(express.json())
-// server.use('/api/plants', plantRouter)
-// server.use('/api/users/auth-router.js', authRouter)
+server.use('/api/plants', plantRouter)
+server.use('/auth', authRouter)
+
+server.get("/", (req, res) => {
+    res.json({ api: "water my plants is up and running!" })
+  })
+  
 
 
 
