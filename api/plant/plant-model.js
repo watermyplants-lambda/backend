@@ -38,7 +38,7 @@ function add(plant) {
     .insert(plant, 'id')
     .then(ids => {
       const [id] = ids;
-      return findById(id)
+      return findPlantById(id)
     })
 }
 
