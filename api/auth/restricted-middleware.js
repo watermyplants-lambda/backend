@@ -1,6 +1,6 @@
 
 const jwt = require('jsonwebtoken');
-const secrets = require('../users/secrets');
+const { jwtSecret } = require('../users/secrets');
 
 module.exports = (req, res, next) => {
     // add code here to verify users are logged in
@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ message: 'we wants token' });
     }
   
-    jwt.verify(token, secrets.jwtSecret, (err, decoded) => {
+    jwt.verify(token, jwtSecret, (err, decoded) => {
       if (err) {
         console.log('decoded error ->', err);
         return res.status(401).json({ message: 'token bad' });

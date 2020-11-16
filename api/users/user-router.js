@@ -12,7 +12,7 @@ router.get("/", restricted, (req, res, next) => {
 
     console.log('users get /')
     console.log(req.jwt)
-    console.log(req.jwt.department)
+    // console.log(req.jwt.department)
   
     Users.find()
       .then(users => {

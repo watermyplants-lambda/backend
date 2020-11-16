@@ -1,6 +1,6 @@
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const secrets =require('./secrets')
+const { jwtSecret } =require('./secrets')
 const { isValid } = require("./user-service.js")
 const Users = require("./user-model")
 
@@ -87,6 +87,6 @@ router.post("/login", (req, res) => {
     const options = {
       expiresIn: '1d',
     };
-    return jwt.sign(payload, secrets.jwtSecret, options);
+    return jwt.sign(payload, jwtSecret, options);
   }
   module.exports = router
