@@ -4,7 +4,7 @@ const Users = require('./user-model')
 const Plants = require('../plant/plant-model')
 const restricted = require('./auth-middleware');
 const validateUser = require('./user-middleware');
-const { plantExist } = require('../plant/plant-middleware')
+const plantExist  = require('../plant/plant-middleware')
 
 
 // GET a list of all users
@@ -30,9 +30,10 @@ router.get("/", restricted, (req, res, next) => {
   })
 
 
-router.get('/:id', restricted, validateUser, (req, res) => {
+  router.get('/:id', restricted, validateUser, (req, res, next) => {
     res.status(200).json(req.user)
-})
+  })
+
 
 router.put('/:id', restricted, validateUser, (req, res, next) => {
     Users.updateUser(req.params.id, req.body)
@@ -88,5 +89,23 @@ function validateUpdateData(req, res, next) {
     }
     next()
   }
+
+
+async function checkPlantData(req, res, next) {
+ 
+    const { id } = req.params
+  
+    const plant = await Plants.myPlantId(id)
+  
+    if(!plant){
+      res.status(404).json({ message: 'plant does not exist'})
+    } else if (!plant.nickname || !plant.species || !plant.water_schedule){
+      res.status(404).json({ message: 'Input missing data fields'})
+    }
+      next();
+    }
+  
+    
+    module.exports = checkPlantData
 
 module.exports = router;

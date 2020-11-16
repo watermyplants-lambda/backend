@@ -8,7 +8,8 @@ module.exports = {
   findPlantsByUser,
   add,
   update,
-  remove
+  remove,
+  myPlantId
 }
 
 function find() {
@@ -38,7 +39,7 @@ function add(plant) {
     .insert(plant, 'id')
     .then(ids => {
       const [id] = ids;
-      return findPlantById(id)
+      return findById(id)
     })
 }
 
@@ -53,3 +54,9 @@ function remove(id) {
       .where("id", id)
       .del()
 }
+
+function myPlantId(id) {
+    return db('plants')
+      .where({ id })
+      .first();
+  }
