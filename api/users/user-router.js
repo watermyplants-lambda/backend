@@ -2,19 +2,28 @@ const router = require('express').Router()
 const bc = require('bcryptjs');
 const Users = require('./user-model')
 const Plants = require('../plant/plant-model')
-const restricted = require('../auth/restricted-middleware');
+const restricted = require('./auth-middleware');
 const validateUser = require('./user-middleware');
 const { plantExist } = require('../plant/plant-middleware');
 
 
 // GET a list of all users
 
-router.get('/', restricted, (req, res) => {
-  Users.find()
-    .then(user => {
-      res.status(200).json(user);
+router.get('/', restricted, (req, res, next) => {
+  
+    Users.find()
+    .then(users => {
+
+      // console.log(`inside findBy`)
+      // console.log(users)
+
+      if (users.length) {
+        res.status(200).json(users)
+      } else {
+        res.status(404).json({ message: 'no users at the moment' })
+      }
     })
-    .catch(err => res.send(err))
+    .catch(next)
     })
 
 
