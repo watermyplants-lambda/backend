@@ -16,6 +16,20 @@ module.exports = {
       afterCreate: (conn, done) => {
         conn.run("PRAGMA foreign_key = ON", done);
       },
-    }
+    },
+    // production: {
+    //   client: "pg",
+    //   connection: pgConnection,
+    //   pool: {
+    //     min: 2,
+    //     max: 10,
+    //   },
+    //   migrations: {
+    //     directory: "./data/migrations",
+    //   },
+    //   seeds: {
+    //     directory: "./data/seeds",
+    //   },
+    // },
 
 };
