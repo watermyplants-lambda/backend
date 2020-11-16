@@ -11,8 +11,8 @@ module.exports = {
 }
 
 function find() {
-  return db('users')
-}
+    return db("users")
+  }
 function findBy(filter) {
     // console.log(`-- user model inside findBy --`)
     // console.log(filter)

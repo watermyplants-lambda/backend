@@ -1,60 +1,46 @@
 const router = require('express').Router()
-const bc = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 const Users = require('./user-model')
 const Plants = require('../plant/plant-model')
 const restricted = require('./auth-middleware');
 const validateUser = require('./user-middleware');
-const { plantExist } = require('../plant/plant-middleware');
+const { plantExist } = require('../plant/plant-middleware')
 
 
 // GET a list of all users
+router.get("/", restricted, (req, res, next) => {
 
-router.get('/', restricted, (req, res, next) => {
+    console.log('users get /')
+    console.log(req.jwt)
+    console.log(req.jwt.department)
   
     Users.find()
-    .then(users => {
-
-      // console.log(`inside findBy`)
-      // console.log(users)
-
-      if (users.length) {
-        res.status(200).json(users)
-      } else {
-        res.status(404).json({ message: 'no users at the moment' })
-      }
-    })
-    .catch(next)
-    })
+      .then(users => {
+  
+        // console.log(`inside findBy`)
+        // console.log(users)
+  
+        if (users.length) {
+          res.status(200).json(users)
+        } else {
+          res.status(404).json({ message: 'no users at the moment' })
+        }
+      })
+      .catch(next)
+  })
 
 
 router.get('/:id', restricted, validateUser, (req, res) => {
-  const id = req.params.id;
-
-  Users.myUserId(id)
-    .then(users => {
-      res.status(200).json(users);
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'user not received' })
-    })
+    res.status(200).json(req.user)
 })
 
-router.put('/:id', restricted, validateUser, (req, res) => {
-  const id = req.params.id;
-  const changes = req.body;
-  const hash = bc.hashSync(changes.password, 8); 
-  changes.password = hash;
-  const updatedUser = { ...changes, id };
-
-  Users.update(id, changes)
-    .then(editUser => {
-      console.log(updatedUser);
-      res.status(200).json(updatedUser);
+router.put('/:id', restricted, validateUser, (req, res, next) => {
+    Users.updateUser(req.params.id, req.body)
+    .then(updatedUser => {
+      delete updatedUser.password
+      res.status(200).json({ updatedUser })
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ error: 'users could not be modified' });
-    })
+    .catch(next)
 })
 
 router.delete('/:id', restricted, validateUser, (req, res) => {
@@ -95,5 +81,12 @@ router.post('/:id/plants', restricted, validateUser, plantExist, (req, res) => {
       res.status(500).json({ error: 'Could not save the plant' });
     })
 })
+
+function validateUpdateData(req, res, next) {
+    if (!req.body.first_name && !req.body.last_name && !req.body.email && !req.body.password) {
+      res.status(404).json({ error: `first_name, last_name, email, and password are require` })
+    }
+    next()
+  }
 
 module.exports = router;
