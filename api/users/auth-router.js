@@ -1,6 +1,6 @@
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const secrets =require('./secrets')
+const { jwtSecret } =require('./secrets')
 const { isValid } = require("./user-service.js")
 const Users = require("./user-model")
 
@@ -32,7 +32,7 @@ router.post('/register', async (req, res, next) => {
     // implement registration
     const credentials = req.body
 
-    if (isValid(credentials)) {// check that I that the password is a string, and that the email exist
+    if (isValid(credentials)) {
       const rounds = process.env.BCRYPT_ROUNDS || 8
       // hash the password
       const hash = bcryptjs.hashSync(credentials.password, rounds)
@@ -77,16 +77,16 @@ router.post("/login", (req, res) => {
     }
   });
   
-  // helper to make the token using the user from db as raw material
+
   function makeToken(user) {
     const payload = {
       subject: user.id,
-      email: user.email,
+      username: user.email,
      
     };
     const options = {
       expiresIn: '1d',
     };
-    return jwt.sign(payload, secrets.jwtSecret, options);
+    return jwt.sign(payload, jwtSecret, options);
   }
   module.exports = router

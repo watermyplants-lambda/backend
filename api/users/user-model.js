@@ -4,7 +4,7 @@ const db = require('../../data/config')
 module.exports = {
   find,
   findBy,
-  findUserById,
+  findById,
   add,
   update,
   remove
@@ -13,20 +13,14 @@ module.exports = {
 function find() {
     return db("users")
   }
-function findBy(filter) {
-    // console.log(`-- user model inside findBy --`)
-    // console.log(filter)
-  
-    return db("users")
-      .where(filter)
-      .orderBy("id")
+  function findBy(filter) {
+    return db('users')
+      .where(filter);
   }
 
-function findUserById(id) {
-  return db('users')
-    .where({ id })
-    .first()
-}
+  function findById(filter) {
+    return db('users').where(filter);
+  }
 
 function add(user) {
   return db.insert(user)

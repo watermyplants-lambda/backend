@@ -10,14 +10,14 @@ module.exports = (req, res, next) => {
       return res.status(401).json({ message: 'we wants token' });
     }
   
-//     jwt.verify(token, jwtSecret, (err, decoded) => {
-//       if (err) {
-//         console.log('decoded error ->', err);
-//         return res.status(401).json({ message: 'token bad' });
-//       }
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+      if (err) {
+        console.log('decoded error ->', err);
+        return res.status(401).json({ message: 'token bad' });
+      }
   
-//       console.log('decoded token ->', decoded);
-//       req.decodedJwt = decoded;
-//       next();
-//     })m"
-}// 
+      console.log('decoded token ->', decoded);
+      req.decodedJwt = decoded;
+      next();
+    })
+}

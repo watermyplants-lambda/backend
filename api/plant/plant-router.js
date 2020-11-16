@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Plants = require('./plant-model')
+const restricted = require('../users/auth-middleware')
 
 
 
@@ -44,6 +45,7 @@ router.get('/', (req, res) => {
         res.status(500).json({ error: 'could not update plant' })
       })
   })
+
 
   //delete plant
   router.delete('/:id', (req, res) => {
