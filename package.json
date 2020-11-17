@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:watch": "jest --watch",
+    "test": "jest",
+    "start:watch": "nodemon index.js",
     "server":"nodemon index.js",
     "start": "node index.js"
   },

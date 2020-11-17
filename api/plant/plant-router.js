@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Plants = require('./plant-model')
 const restricted = require('../users/auth-middleware')
+const validateUser = require('../users/user-middleware')
+const db = require("../../data/config")
+
 
 
 
@@ -16,19 +19,22 @@ router.get('/', (req, res) => {
       })
   })
 
-  //get plants by id
-  router.get('/:id', (req, res) => {
-    const id = req.params.id
-     Plants.findPlantById(id)
-      .then(plants => {
-        res.status(200).json(plants)
+  router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    db("plants")
+      .where({ id })
+      .then(plant => {
+        if (plant.length === 0) {
+          res
+            .status(400)
+            .json({ message: "There are no plants associated with that id." });
+        } else {
+          res.status(200).json(plant);
+        }
       })
-      .catch(err => {
-        res.status(500).json({ error: 'no plant exists for this id' })
-      })
-  })
-
-
+      .catch(err => res.status(500).json(err));
+  });
+  
   //update plant 
   router.put('/:id', (req, res) => {
     const id = req.params.id
