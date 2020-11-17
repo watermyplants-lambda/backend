@@ -15,5 +15,4 @@
   "paths": {}
   
 }
-- name: Frogo-UI-Kit
-  uses: amirisback/frogo-ui-kit@1.0.2
+
