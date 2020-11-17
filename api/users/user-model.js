@@ -21,9 +21,9 @@ function find() {
       .where(filter)
       .orderBy("id")
   }
-  function findById(filter) {
-    return db('users').where(filter);
-  }
+//   function findById(filter) {
+//     return db('users').where(filter);
+//   }
 
 function add(user) {
   return db.insert(user)
