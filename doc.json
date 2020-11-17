@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Water-My-Plants",
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://watermyplants35.herokuapp.com/"
+    }
+  ],
+  "paths": {}
+  
+}
+- name: Frogo-UI-Kit
+  uses: amirisback/frogo-ui-kit@1.0.2
