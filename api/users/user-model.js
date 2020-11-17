@@ -14,10 +14,13 @@ function find() {
     return db("users")
   }
   function findBy(filter) {
-    return db('users')
-      .where(filter);
+    console.log(`-- user model inside findBy --`)
+    console.log(filter)
+  
+    return db("users")
+      .where(filter)
+      .orderBy("id")
   }
-
   function findById(filter) {
     return db('users').where(filter);
   }
@@ -38,3 +41,9 @@ function remove(id) {
       .where('id', id)
       .del()
 }
+
+function findById(id) {
+    return db("users")
+      .where({ id })
+      .first()
+  }

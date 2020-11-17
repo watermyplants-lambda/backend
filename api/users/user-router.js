@@ -69,19 +69,20 @@ router.get('/:id/plants', restricted, validateUser, (req, res) => {
     })
 })
 
-router.post('/:id/plants', restricted, validateUser, plantExist, (req, res) => {
-  const id = req.params.id;
-  let plants = req.body;
-  plants = { ...plants, user_id: id };
-
-  Plants.add(plants)
-    .then(newPlant => {
-      res.status(201).json(newPlant);
-    })
-    .catch(error => {
-      res.status(500).json({ error: 'Could not save the plant' });
-    })
-})
+router.post('/:id/plants', restricted, validateUser, checkPlantData, (req, res) => {
+    const id = req.params.id;
+    let plants = req.body;
+    plants = { ...plants, user_id: id };
+  
+    Plants.add(plants)
+      .then(newPlant => {
+        res.status(201).json(newPlant);
+      })
+      .catch(error => {
+        res.status(500).json({ error: 'Could not save the plant' });
+      })
+  })
+  
 
 function validateUpdateData(req, res, next) {
     if (!req.body.first_name && !req.body.last_name && !req.body.email && !req.body.password) {
@@ -99,13 +100,12 @@ async function checkPlantData(req, res, next) {
   
     if(!plant){
       res.status(404).json({ message: 'plant does not exist'})
-    } else if (!plant.nickname || !plant.species || !plant.water_schedule){
+    } else if (!plant.name || !plant.species || !plant.water_schedule){
       res.status(404).json({ message: 'Input missing data fields'})
     }
       next();
     }
   
-    
-    module.exports = checkPlantData
+
 
 module.exports = router;

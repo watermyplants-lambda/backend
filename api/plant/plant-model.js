@@ -19,6 +19,16 @@ function find() {
 function findBy(filter) {
   return db('plants')
     .where(filter)
+    
+}
+
+function findById(filter) {
+    console.log(`-- comment model inside findBy --`)
+    console.log(filter)
+
+    return db("plants")
+        .where(filter)
+        .orderBy("id")
 }
 
 function findPlantById(id) {
@@ -34,13 +44,14 @@ function findPlantsByUser(userId) {
     .where('users.id', userId)
 }
 
-function add(plant) {
-  return db('plants')
-    .insert(plant, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findById(id)
-    })
+async function add(plant) {
+    try {
+        const [id] = await db("plants").insert(plant, "id")
+
+        return findPlantById(id)
+    } catch (error) {
+        throw error
+    }
 }
 
 function update(id, changes) {

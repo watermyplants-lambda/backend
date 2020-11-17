@@ -1,10 +1,11 @@
+const Plants = require('./plant-model')
 
 
-async function plantExist(req, res, next) {
+ function plantExist(req, res, next) {
  
     const { id } = req.params
   
-    const plant = await Plants.myPlantId(id)
+    const plant = Plants.myPlantId(id)
   
     if(!plant){
       res.status(404).json({ message: 'no such plant exists'})
