@@ -40,10 +40,10 @@
 
 ```
 {
-	"email": "testUser", // string, unique
+	"email": "skelator@aol.com", // string
 	"firstName": "test", // string
 	"lastName": "user", // string
-	"password": "pass" // string
+	"password": "password" // string
 }
 ```
 
