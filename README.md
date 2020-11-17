@@ -1,8 +1,6 @@
 # backend
 
 
-## Table of Contents
-
 - [ BACKEND Water-My-Plants ](#backend---water-my-plants)
   - [API ><>https://watermyplants35.herokuapp.com/<><](#api--httpsapiwatermyplantsherokuappcom)
   - [Table of Contents](#table-of-contents)
@@ -38,7 +36,7 @@
 | POST   | /api/users/:id/plants                 | create a new plant for user           |
 | PUT    | /api/plants/:id              | update a plant's information                                 |
 
-### POST /auth/register
+### POST api/auth/register
 
 ```
 {
@@ -65,7 +63,7 @@
 }
 ```
 
-### POST /auth/login
+### POST api/auth/login
 
 ```
 {
