@@ -17,7 +17,7 @@ router.post('/register', async (req, res, next) => {
       !req.body.email &&
       !req.body.password
     ) {
-      res.status(404).json({ error: `first_name, last_name, email, and password are require` })
+      res.status(400).json({ error: `first_name, last_name, email, and password are require` })
     }
 
     // validate unique email
@@ -40,7 +40,7 @@ router.post('/register', async (req, res, next) => {
 
       // save the user to the database
       await Users.add(credentials)
-      res.status(201).json({ message: `User sucessfully made.` })
+      res.status(200).json({ message: `User sucessfully made.` })
 
     } else { //password is not a string or their is no email
       res.status(404).json({
@@ -48,7 +48,7 @@ router.post('/register', async (req, res, next) => {
       })
     }
   } catch (error) {
-    console.log(error.message)
+
     next(error)
   }
 
@@ -64,7 +64,7 @@ router.post("/login", (req, res) => {
             const token = makeToken(user) // make token
             res.status(200).json({ message: "Welcome to our API", token }); // send it back
           } else {
-            res.status(401).json({ message: "Invalid credentials" });
+            res.status(404).json({ message: "Invalid credentials" });
           }
         })
         .catch(error => {
