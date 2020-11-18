@@ -40,7 +40,7 @@ router.post('/register', async (req, res, next) => {
 
       // save the user to the database
       await Users.add(credentials)
-      res.status(200).json({ message: `User sucessfully made.` })
+      res.status(200).json({ message: `User ${user.id} sucessfully made.` })
 
     } else { //password is not a string or their is no email
       res.status(404).json({
@@ -55,14 +55,15 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post("/login", (req, res) => {
-    const { email, password } = req.body;
-  
+    const { email, password} = req.body;
+    const id = req.params.id;
     if (isValid(req.body)) {
       Users.findBy({ email })
         .then(([user]) => {
           if (user && bcryptjs.compareSync(password, user.password)) {
             const token = makeToken(user) // make token
-            res.status(200).json({ message: "Welcome to our API", token }); // send it back
+            console.log(user)
+            res.status(200).json({ message: `Welcome to our API user ${user.id}`, user,  token }); // send it back
           } else {
             res.status(404).json({ message: "Invalid credentials" });
           }
