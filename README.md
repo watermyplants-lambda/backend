@@ -15,7 +15,6 @@
     - [GET /api/plants/:id](#get-/api/plants/:id)
     - [POST /api/plants](#post-/api/plants)
     - [DELETE /api/plants/:id](#get-/api/plants/:id)
-    - [POST /api/notifications](#post-/api/notifications)
 
 
 - [Author](#author)
