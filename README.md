@@ -10,6 +10,7 @@
     - [GET /api/users](#get-/api/users)
     - [GET /api/users/:id](#get-/api/users/:id)
     - [GET /api/users/:id/plants](#get-/api/users/:id/plants)
+    - [POST /api/users/:id/plants](#post-/api/users/:id/plants)
     - [DELETE /api/users/:id](#get-/api/users/:id)
     - [GET /api/plants](#get-/api/plants)
     - [GET /api/plants/:id](#get-/api/plants/:id)
